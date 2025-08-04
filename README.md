@@ -39,11 +39,16 @@ This repository demonstrates how to:
 ## Repository Structure
 
 ```
-Deployment/           # CI/CD and monitoring pipelines (YAML)
-Infra-Provisioning/   # Terraform scripts for infra lifecycle (create/destroy)
-k8s/                  # Kubernetes manifests for workloads, config, and monitoring
-modules/              # Terraform modules (AKS, Key Vault, Service Principals)
-Terraform/            # Root Terraform configuration, variables, and outputs
+Deployment/             # CI/CD and monitoring pipelines (Build.yml, Deploy.yml, Monitoring.yml)
+Infra-Provisioning/     # Terraform automation pipelines (Create-infra.yml, Destroy-infra.yml)
+k8s/                    # Kubernetes manifests (deployments, services, configmaps, secrets, ingress)
+modules/
+  aks-cluster/          # AKS cluster Terraform module
+  keyvault/             # Key Vault Terraform module
+  service-principal/    # Service Principal Terraform module
+Terraform/              # Root Terraform configuration (backend.tf, main.tf, provider.tf, etc.)
+website/                # Dummy website and microservice folders (not the focus)
+screenshots/            # Screenshots for documentation
 ```
 
 ## Infrastructure Provisioning (Terraform)
