@@ -116,8 +116,11 @@ screenshots/            # Screenshots for documentation
     - The monitoring stack (Prometheus & Grafana) is automatically installed via the CI/CD pipeline
     - Access Grafana via the LoadBalancer service endpoint
 
-<!-- Screenshot: Website home page and Grafana login -->
+
+### Website Home Page
 ![Website Home Page](screenshots/website-homepage.png)
+
+### Grafana Home Page
 ![Grafana Login](screenshots/grafana-login.png)
 
 
