@@ -1,7 +1,7 @@
 
 # Cloud-Native Shopping Site Infrastructure
 
-This project provides a complete infrastructure-as-code (IaC) and Kubernetes-based deployment solution for a cloud-native shopping site. The main focus is on scalable, secure, and observable infrastructure using Terraform, Kubernetes, and automated CI/CD pipelines with integrated monitoring. The website code is a placeholder and not the focus of this repository.
+This project provides a complete infrastructure-as-code (IaC) and Kubernetes-based deployment solution for a cloud-native shopping site. The main focus is on scalable, secure, and observable infrastructure using Terraform, Kubernetes, and automated CI/CD pipelines with integrated monitoring.
 
 ## Table of Contents
 - [Overview](#overview)
