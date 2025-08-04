@@ -4,6 +4,7 @@
 This project provides a complete infrastructure-as-code (IaC) and Kubernetes-based deployment solution for a cloud-native shopping site. The main focus is on scalable, secure, and observable infrastructure using Terraform, Kubernetes, and automated CI/CD pipelines with integrated monitoring.
 
 ## Table of Contents
+
 - [Overview](#overview)
 - [Technologies Used](#technologies-used)
 - [Repository Structure](#repository-structure)
@@ -11,8 +12,6 @@ This project provides a complete infrastructure-as-code (IaC) and Kubernetes-bas
 - [Kubernetes Manifests](#kubernetes-manifests)
 - [CI/CD & Monitoring](#cicd--monitoring)
 - [Getting Started](#getting-started)
-- [Contributing](#contributing)
-- [License](#license)
 
 ---
 
