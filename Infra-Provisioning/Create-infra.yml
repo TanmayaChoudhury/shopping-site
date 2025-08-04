@@ -50,6 +50,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Terraform'
               backendServiceArm: $(ServiceConnection)
               backendAzureRmOverrideSubscriptionID: $(SubscriptionID)
               backendAzureRmResourceGroupName:  $(ResourceGroupName)
@@ -62,6 +63,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'plan'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Terraform'
               environmentServiceNameAzureRM: $(ServiceConnection)
               environmentAzureRmOverrideSubscriptionID: $(SubscriptionID)
 
@@ -81,6 +83,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Terraform'
               backendServiceArm: $(ServiceConnection)
               backendAzureRmOverrideSubscriptionID: $(SubscriptionID)
               backendAzureRmResourceGroupName: '$(ResourceGroupName)'
@@ -93,9 +96,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'apply'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/Terraform'
               commandOptions: '--auto-approve'
               environmentServiceNameAzureRM: $(ServiceConnection)
               environmentAzureRmOverrideSubscriptionID: $(SubscriptionID)
-
-          
-

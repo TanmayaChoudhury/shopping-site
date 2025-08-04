@@ -24,8 +24,6 @@ This repository demonstrates how to:
 - Automate build, deployment, and monitoring with CI/CD pipelines
 - Enable robust monitoring with Prometheus and Grafana, automatically installed via pipeline
 
-<!-- Screenshot: Architecture diagram or high-level infrastructure overview -->
-![Architecture Overview](screenshots/architecture-overview.png)
 
 ## Technologies Used
 
@@ -76,13 +74,15 @@ screenshots/            # Screenshots for documentation
     - Sets Grafana admin password from pipeline secret
 - Monitoring is enabled for all workloads via the CI/CD pipeline, providing observability out-of-the-box
 
-<!-- Screenshot: Example pipeline run, Prometheus/Grafana dashboard -->
+<!-- Screenshot: All pipelines overview -->
+![All Pipelines Overview](screenshots/all-pipelines-overview.png)
+
+<!-- Screenshot: Example pipeline Build, run,.. -->
 
 ![Infra Provisioning Pipeline](screenshots/pipeline-infra-provisioning.png)
 ![Build Pipeline](screenshots/pipeline-build.png)
 ![Deploy Pipeline](screenshots/pipeline-deploy.png)
 ![Monitoring Pipeline](screenshots/pipeline-monitoring.png)
-![Grafana Dashboard](screenshots/grafana-dashboard.png)
 ![Destroy Infra Pipeline](screenshots/pipeline-destroy-infra.png)
 
 <!-- Screenshot: Service Accounts created for pipelines -->
