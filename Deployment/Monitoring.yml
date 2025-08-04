@@ -49,28 +49,6 @@ stages:
               helmVersionToInstall: 'latest'
 
 
-          # - script: |
-          #     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-          #     helm repo update
-          #   displayName: 'Add ingress-nginx Helm repo'
-
-          # - task: HelmDeploy@1
-          #   displayName: 'Install NGINX Ingress Controller'
-          #   inputs:
-          #     connectionType: 'Azure Resource Manager'
-          #     azureSubscription: 'Azure-Devops'
-          #     azureResourceGroup: '$(ResourceGroup)'
-          #     kubernetesCluster: 'Tanmaya-portfolio-aks-cluster'
-          #     useClusterAdmin: true
-          #     namespace: 'default'
-          #     command: 'upgrade'
-          #     chartType: 'Name'
-          #     chartName: 'ingress-nginx/ingress-nginx'
-          #     releaseName: 'nginx-ingress'
-          #     overrideValues: 'controller.service.type=LoadBalancer'
-          #     install: true
-
-
           - task: HelmDeploy@1
             displayName: "Install kube-prometheus-stack"
             inputs:
@@ -90,17 +68,5 @@ stages:
                 --set grafana.service.type=LoadBalancer
                 --set grafana.adminPassword=$(grafana)
                 --wait
-              # --set grafana.ingress.enabled=false
-              # --set grafana.env.GF_SERVER_ROOT_URL="/grafana"
-              # --set prometheus.prometheusSpec.externalUrl="/prometheus"
-                 
-      
-          # - task: KubernetesManifest@1
-          #   inputs:
-          #     action: 'deploy'
-          #     connectionType: 'kubernetesServiceConnection'
-          #     kubernetesServiceConnection: '$(ServiceConnectionAKS)'
-          #     namespace: 'default'
-          #     manifests: |
-          #       $(System.DefaultWorkingDirectory)/k8s/monitoring-ingress.yaml
+
 
