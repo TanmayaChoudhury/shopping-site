@@ -1,69 +1,109 @@
-# Shopping Site Microservices Platform
 
-This project is a cloud-native shopping site built with Python microservices, orchestrated using Kubernetes, and provisioned with Terraform. It demonstrates a modern, scalable, and modular e-commerce architecture.
+# Cloud-Native Shopping Site Infrastructure
+
+This project provides a complete infrastructure-as-code (IaC) and Kubernetes-based deployment solution for a cloud-native shopping site. The main focus is on scalable, secure, and observable infrastructure using Terraform, Kubernetes, and automated CI/CD pipelines with integrated monitoring. The website code is a placeholder and not the focus of this repository.
 
 ## Table of Contents
-- [Architecture Overview](#architecture-overview)
+- [Overview](#overview)
 - [Technologies Used](#technologies-used)
-- [Project Structure](#project-structure)
-- [Infrastructure as Code (Terraform)](#infrastructure-as-code-terraform)
+- [Repository Structure](#repository-structure)
+- [Infrastructure Provisioning (Terraform)](#infrastructure-provisioning-terraform)
 - [Kubernetes Manifests](#kubernetes-manifests)
-- [CI/CD & Deployment](#cicd--deployment)
+- [CI/CD & Monitoring](#cicd--monitoring)
 - [Getting Started](#getting-started)
 - [Contributing](#contributing)
 - [License](#license)
 
 ---
 
-## Architecture Overview
-- **Kubernetes**: All workloads are containerized and deployed to a Kubernetes cluster for orchestration and scaling.
-- **Terraform**: Infrastructure (AKS, Key Vault, Service Principals, etc.) is provisioned and managed using Terraform modules.
-- **CI/CD & Monitoring**: Automated build, deployment, and monitoring pipelines are defined in the `Deployment/` directory. Monitoring is also enabled for the website using these CI/CD pipelines.
+## Overview
+
+This repository demonstrates how to:
+- Provision cloud infrastructure (e.g., Azure AKS, Key Vault, Service Principals) using Terraform modules
+- Deploy workloads to Kubernetes using declarative YAML manifests
+- Automate build, deployment, and monitoring with CI/CD pipelines
+- Enable robust monitoring with Prometheus and Grafana, automatically installed via pipeline
+
+<!-- Screenshot: Architecture diagram or high-level infrastructure overview -->
+![Architecture Overview](screenshots/architecture-overview.png)
 
 ## Technologies Used
-- **Docker**: Containerization
-- **Kubernetes (k8s)**: Orchestration and deployment
-- **Terraform**: Infrastructure as Code (IaC)
-- **Azure AKS**: Managed Kubernetes cluster (example cloud provider)
-- **CI/CD**: GitHub Actions or Azure Pipelines (YAML workflows)
 
-## Project Structure
+- **Terraform**: Infrastructure as Code (IaC) for cloud resource provisioning
+- **Kubernetes (k8s)**: Container orchestration and workload management
+- **Helm**: Package manager for Kubernetes (used for monitoring stack)
+- **Prometheus & Grafana**: Monitoring and visualization
+- **Azure AKS**: Managed Kubernetes cluster (example cloud provider)
+- **CI/CD**: Azure Pipelines (YAML workflows)
+
+## Repository Structure
+
 ```
 Deployment/           # CI/CD and monitoring pipelines (YAML)
-Infra-Provisioning/   # Terraform scripts for infra lifecycle
-k8s/                  # Kubernetes manifests for all workloads and monitoring
-modules/              # Terraform modules (AKS, Key Vault, etc.)
-Terraform/            # Root Terraform configuration
+Infra-Provisioning/   # Terraform scripts for infra lifecycle (create/destroy)
+k8s/                  # Kubernetes manifests for workloads, config, and monitoring
+modules/              # Terraform modules (AKS, Key Vault, Service Principals)
+Terraform/            # Root Terraform configuration, variables, and outputs
 ```
 
+## Infrastructure Provisioning (Terraform)
 
-
-## Infrastructure as Code (Terraform)
-- **Terraform/**: Main configuration, providers, variables, and outputs
+- **Terraform/**: Contains main configuration, providers, variables, and outputs for the environment
 - **modules/**: Reusable modules for AKS, Key Vault, and Service Principals
-- **Infra-Provisioning/**: Scripts to create and destroy infrastructure
+- **Infra-Provisioning/**: Scripts to create and destroy infrastructure using the above modules
+
+### Key Steps
+1. Configure variables in `Terraform/terraform.tfvars`
+2. Run `Create-infra.yml` in `Infra-Provisioning/` to provision resources
+3. Run `Destroy-infra.yml` to tear down resources when needed
 
 ## Kubernetes Manifests
-- **k8s/**: Contains all deployment, service, configmap, secret, and ingress YAMLs for workloads and monitoring
 
-## CI/CD & Deployment
-- **Deployment/**: Contains YAML files for build, deploy, and monitoring pipelines
-- Example: `Build.yml`, `Deploy.yml`, `Monitoring.yml`
+- **k8s/**: Contains all YAML manifests for deploying workloads, services, configmaps, secrets, and ingress resources
+- Includes monitoring-related manifests and namespaces
+
+## CI/CD & Monitoring
+
+- **Deployment/Build.yml** and **Deployment/Deploy.yml**: Automate build and deployment of workloads
+- **Deployment/Monitoring.yml**: Pipeline automates installation of Prometheus and Grafana using Helm
+    - Installs `kube-prometheus-stack` chart
+    - Configures Prometheus as ClusterIP and Grafana as LoadBalancer
+    - Sets Grafana admin password from pipeline secret
+- Monitoring is enabled for all workloads via the CI/CD pipeline, providing observability out-of-the-box
+
+<!-- Screenshot: Example pipeline run, Prometheus/Grafana dashboard -->
+
+![Infra Provisioning Pipeline](screenshots/pipeline-infra-provisioning.png)
+![Build Pipeline](screenshots/pipeline-build.png)
+![Deploy Pipeline](screenshots/pipeline-deploy.png)
+![Monitoring Pipeline](screenshots/pipeline-monitoring.png)
+![Grafana Dashboard](screenshots/grafana-dashboard.png)
+![Destroy Infra Pipeline](screenshots/pipeline-destroy-infra.png)
+
+<!-- Screenshot: Service Accounts created for pipelines -->
+![Service Accounts](screenshots/service-accounts.png)
+
+<!-- Screenshot: Variable Groups used in pipelines -->
+![Variable Groups](screenshots/variable-groups.png)
 
 ## Getting Started
+
 1. **Provision Infrastructure**
-   - Configure variables in `Terraform/terraform.tfvars`
-   - Run Terraform scripts in `Infra-Provisioning/`
+    - Edit `Terraform/terraform.tfvars` with your environment details
+    - Run the provisioning pipeline or scripts in `Infra-Provisioning/`
 2. **Build & Push Docker Images**
-   - Build images for your workloads
-   - Push to your container registry
+    - Build images for your workloads (if any)
+    - Push to your container registry
 3. **Deploy to Kubernetes**
-   - Apply manifests in `k8s/` to your cluster
-4. **Access the Application**
-   - Use the configured ingress or service endpoint
+    - Apply manifests in `k8s/` to your cluster
+4. **Enable Monitoring**
+    - The monitoring stack (Prometheus & Grafana) is automatically installed via the CI/CD pipeline
+    - Access Grafana via the LoadBalancer service endpoint
 
-## Contributing
-Contributions are welcome! Please open issues or pull requests for improvements or bug fixes.
+<!-- Screenshot: Website home page and Grafana login -->
+![Website Home Page](screenshots/website-homepage.png)
+![Grafana Login](screenshots/grafana-login.png)
 
-## License
-This project is licensed under the MIT License.
+
+
+
