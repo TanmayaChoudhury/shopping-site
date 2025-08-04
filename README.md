@@ -93,9 +93,6 @@ screenshots/            # Screenshots for documentation
 ### Destroy Infra Pipeline
 ![Destroy Infra Pipeline](screenshots/pipeline-destroy-infra.png)
 
-### Grafana Dashboard
-![Grafana Dashboard](screenshots/grafana-dashboard.png)
-
 ### Service Accounts created for pipelines
 ![Service Accounts](screenshots/service-accounts.png)
 
