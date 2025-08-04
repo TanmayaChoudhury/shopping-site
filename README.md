@@ -74,21 +74,32 @@ screenshots/            # Screenshots for documentation
     - Sets Grafana admin password from pipeline secret
 - Monitoring is enabled for all workloads via the CI/CD pipeline, providing observability out-of-the-box
 
-<!-- Screenshot: All pipelines overview -->
+
+### All Pipelines Overview
 ![All Pipelines Overview](screenshots/all-pipelines-overview.png)
 
-<!-- Screenshot: Example pipeline Build, run,.. -->
-
+### Infra Provisioning Pipeline
 ![Infra Provisioning Pipeline](screenshots/pipeline-infra-provisioning.png)
+
+### Build Pipeline
 ![Build Pipeline](screenshots/pipeline-build.png)
+
+### Deploy Pipeline
 ![Deploy Pipeline](screenshots/pipeline-deploy.png)
+
+### Monitoring Pipeline
 ![Monitoring Pipeline](screenshots/pipeline-monitoring.png)
+
+### Destroy Infra Pipeline
 ![Destroy Infra Pipeline](screenshots/pipeline-destroy-infra.png)
 
-<!-- Screenshot: Service Accounts created for pipelines -->
+### Grafana Dashboard
+![Grafana Dashboard](screenshots/grafana-dashboard.png)
+
+### Service Accounts created for pipelines
 ![Service Accounts](screenshots/service-accounts.png)
 
-<!-- Screenshot: Variable Groups used in pipelines -->
+### Variable Groups used in pipelines
 ![Variable Groups](screenshots/variable-groups.png)
 
 ## Getting Started
