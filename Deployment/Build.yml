@@ -1,0 +1,73 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- manual
+
+variables:
+  - group: environment-variables
+
+stages:
+  - stage: Build_and_Deploy
+    displayName: Build and Push Docker Images 
+    jobs:
+      - job: BuildandPush
+        pool:
+          name: '$(vmImageName)'
+          demands:
+            - Agent.Name -equals $(AgentName)
+        steps:
+          - task: DockerInstaller@0
+            displayName: Docker Installer
+            inputs:
+              dockerVersion: '17.09.0-ce'
+
+          - task: Docker@2
+            displayName: FrontEnd Service
+            inputs:
+              containerRegistry: '$(ServiceConnectionACR)'
+              repository: 'frontEnd-service'
+              command: 'buildAndPush'
+              Dockerfile: 'website/frontend-service/Dockerfile'
+              tags: '$(Tag)'
+
+          - task: Docker@2
+            displayName: Cart Service
+            inputs:
+              containerRegistry: '$(ServiceConnectionACR)'
+              repository: 'cart-service'
+              command: 'buildAndPush'
+              Dockerfile: 'website/cart-service/Dockerfile'
+              tags: '$(Tag)'
+
+          - task: Docker@2
+            displayName: Order Service
+            inputs:
+              containerRegistry: '$(ServiceConnectionACR)'
+              repository: 'order-service'
+              command: 'buildAndPush'
+              Dockerfile: 'website/order-service/Dockerfile'
+              tags: '$(Tag)'
+
+
+          - task: Docker@2
+            displayName: Product Service
+            inputs:
+              containerRegistry: '$(ServiceConnectionACR)'
+              repository: 'product-service'
+              command: 'buildAndPush'
+              Dockerfile: 'website/product-service/Dockerfile'
+              tags: '$(Tag)'
+
+          - task: Docker@2
+            displayName: User Service
+            inputs:
+              containerRegistry: '$(ServiceConnectionACR)'
+              repository: 'user-service'
+              command: 'buildAndPush'
+              Dockerfile: 'website/user-service/Dockerfile'
+              tags: '$(Tag)'
+
+

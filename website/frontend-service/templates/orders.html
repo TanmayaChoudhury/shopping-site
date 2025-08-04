@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Orders - 3-Tier Shopping Site{% endblock %}
+{% block content %}
+<h2 class="mb-4">Your Orders</h2>
+{% if orders %}
+<ul class="list-group">
+    {% for order in orders %}
+    <li class="list-group-item bg-dark text-light">
+        <strong>Order #{{ order.id }}</strong> - ${{ order.total }}<br>
+        <small>{{ order.date }}</small>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>You have no orders yet.</p>
+{% endif %}
+{% endblock %}

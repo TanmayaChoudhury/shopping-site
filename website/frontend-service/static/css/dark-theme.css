@@ -1,0 +1,8 @@
+/* Custom dark theme overrides for Bootstrap */
+body { background: #181a1b; color: #f1f1f1; }
+.navbar, .footer { background: #23272b !important; }
+.card { background: #23272b; color: #f1f1f1; }
+.btn-primary { background: #007bff; border: none; }
+.btn-primary:hover { background: #0056b3; }
+.form-control, .form-select { background: #23272b; color: #f1f1f1; border: 1px solid #444; }
+.form-control:focus { background: #23272b; color: #fff; border-color: #007bff; }

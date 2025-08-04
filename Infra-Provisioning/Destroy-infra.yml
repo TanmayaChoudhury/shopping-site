@@ -1,0 +1,98 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- manual
+
+variables:
+
+  - name: ServiceConnection
+    value: 'azure-devops'
+
+  - name: ResourceGroupName
+    value: '3teir-application'
+
+  - name: StorageAccountName
+    value: '3tierapplication150602'
+
+  - name: ContainerName
+    value: '3tierapp-container'
+
+  - name: Key
+    value: 'dev.terraform.tfstate'
+
+  - name: SubscriptionID
+    value: '166ebec3-2c7c-49d3-921e-94a11571914c'
+
+  - name: vmImangeName
+    value: 'Default'
+
+  - name: AgentName
+    value: '6e61ec43c62c'
+
+stages:
+  - stage: Plan
+    jobs:
+      - job: Plan
+        pool:
+         name: '$(vmImangeName)'
+         demands:
+           - Agent.Name -equals $(AgentName)
+        steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
+
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: '$(ServiceConnection)'
+              backendAzureRmResourceGroupName: '$(ResourceGroupName)'
+              backendAzureRmStorageAccountName: '$(StorageAccountName)'
+              backendAzureRmContainerName: '$(ContainerName)'
+              backendAzureRmKey: '$(Key)'
+
+          - task: TerraformTask@5
+            displayName: Terraform Plan
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              environmentServiceNameAzureRM: '$(ServiceConnection)'
+              environmentAzureRmOverrideSubscriptionID: '$(SubscriptionID)'
+
+  - stage: Destroy
+    jobs:
+      - job: Destroy
+        pool:
+          name: '$(vmImangeName)'
+          demands:
+            Agent.Name -equals $(AgentName)
+        steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
+
+          - task: TerraformTask@5
+            displayName: Terraform Init
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: '$(ServiceConnection)'
+              backendAzureRmOverrideSubscriptionID:   '$(SubscriptionID)'
+              backendAzureRmResourceGroupName: '$(ResourceGroupName)'
+              backendAzureRmStorageAccountName: '$(StorageAccountName)'
+              backendAzureRmContainerName: '$(ContainerName)'
+              backendAzureRmKey: '$(Key)'
+
+          - task: TerraformTask@5
+            displayName: Terraform Destroy
+            inputs:
+              provider: 'azurerm'
+              command: 'destroy'
+              commandOptions: '--auto-approve'
+              environmentServiceNameAzureRM: '$(ServiceConnection)'
+              environmentAzureRmOverrideSubscriptionID: '$(SubscriptionID)'
+

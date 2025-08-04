@@ -1,0 +1,8 @@
+rgname                  = "aks-rg"
+location                = "canadacentral"
+service_principal_name  = "ServicePrincipal-AKS"
+keyvault_name           = "tanmaya-portfolio-aks-kv"
+SUB_ID                  = "166ebec3-2c7c-49d3-921e-94a11571914c"
+acr_name                = "tier3acr"
+root_password           = "cGFzc3dvcmQ="
+grafana_password        = "Authentication@0001"

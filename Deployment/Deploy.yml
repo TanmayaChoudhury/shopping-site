@@ -1,0 +1,72 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- manual
+
+variables:
+  - group: environment-variables
+  - group: key-vault
+
+stages:
+  - stage: Deploy
+    displayName: "Deploy Website"
+    jobs:
+      - job: Deploy_to_AKS
+        displayName: "Deploy To AKS"
+        pool:
+          name: '$(vmImageName)'
+          demands:
+            - Agent.Name -equals $(AgentName)
+        steps:
+
+
+        - task: KubectlInstaller@0
+          displayName: Install Kubectl
+          inputs:
+            kubectlVersion: 'latest'
+
+        - task: Kubernetes@1
+          displayName: Login To AKS
+          inputs:
+            connectionType: 'Kubernetes Service Connection'
+            kubernetesServiceEndpoint: '$(ServiceConnectionAKS)'
+            namespace: '3tierapp'
+            command: 'login'
+        
+            
+        - task: replacetokens@6
+          displayName: Replacing Variables in Manifest Files
+          inputs:
+            root: '$(System.DefaultWorkingDirectory)/k8s'
+            sources: '**/*.yaml'
+            tokenPattern: 'custom'
+            tokenPrefix: '${'
+            tokenSuffix: '}'
+
+
+        - task: KubernetesManifest@1
+          inputs:
+            action: 'deploy'
+            connectionType: 'kubernetesServiceConnection'
+            kubernetesServiceConnection: '$(ServiceConnectionAKS)'
+            namespace: ''
+            manifests: |
+              $(System.DefaultWorkingDirectory)/k8s/mysql-init-config.yaml
+              $(System.DefaultWorkingDirectory)/k8s/mysql-secret.yaml
+              $(System.DefaultWorkingDirectory)/k8s/configmap.yaml
+              $(System.DefaultWorkingDirectory)/k8s/mysql-statefulset.yaml
+              $(System.DefaultWorkingDirectory)/k8s/frontend-deployment.yaml
+              $(System.DefaultWorkingDirectory)/k8s/cart-deployment.yaml
+              $(System.DefaultWorkingDirectory)/k8s/order-deployment.yaml
+              $(System.DefaultWorkingDirectory)/k8s/product-deployment.yaml
+              $(System.DefaultWorkingDirectory)/k8s/user-deployment.yaml
+              
+
+
+
+
+
+
